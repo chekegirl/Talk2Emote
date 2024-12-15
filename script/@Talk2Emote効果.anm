@@ -1,0 +1,25 @@
+@Œû•Â‚¶
+--track0:Ã·½ÄÚ²Ô,1,100,1,1
+--dialog:Negative,nega_mouse="";Neutral,neut_mouse="";Positive,posi_mouse="";
+
+local Talk2Emote_for_Aviutl_PSDToolKit = require("Talk2Emote_for_Aviutl_PSDToolKit")
+
+if ((str_log[obj.layer] ~= nil) and (o.ptkf ~= nil)) then
+	local face_kyokusei_flag
+	local face_kyokusei
+	face_kyokusei_flag, face_kyokusei = Talk2Emote_for_Aviutl_PSDToolKit.GetParam(obj.layer, str_log[obj.layer], o.ptkf, "face_kyokusei")
+	if (face_kyokusei_flag) then
+		local lx="layer"..obj.track0..".x"
+		local ol = obj.getvalue(lx)
+		local oltp = type(ol)
+		if (oltp == "nil") then
+			if (face_kyokusei == "negative") then
+				PSD:addstate(nega_mouse)
+			elseif (face_kyokusei == "neutral") then
+				PSD:addstate(neut_mouse)
+			elseif (face_kyokusei == "positive") then
+				PSD:addstate(posi_mouse)
+			end
+		end
+	end
+end

@@ -1,0 +1,112 @@
+--track0:ﾃｷｽﾄﾚｲﾔ,1,100,1,1
+--track1:許容差分,0,1,0,0.01
+--check0:←ウインドウ立ち上げボタン,0
+--dialog:単語Diff辞書引き/chk,is_word=0;意味辞書引き/chk,is_ban_list=0;
+
+--必要なライブラリの読み込み
+local rikky_module = require('rikky_module')
+--local aviutl_path = rikky_module.getinfo("path")
+--package.cpath = package.cpath .. ";"..aviutl_path.."Talk2Emote\\?.dll"
+local Talk2Emote_for_Aviutl_PSDToolKit = require('Talk2Emote_for_Aviutl_PSDToolKit')
+
+--最後の処理を指図する
+local Talk2Emote_for_Aviutl_PSDToolKit_meta = {
+	__gc = function()
+		release_Talk2Emote_for_Aviutl_PSDToolKit()
+	end
+}
+setmetatable(Talk2Emote_for_Aviutl_PSDToolKit, Talk2Emote_for_Aviutl_PSDToolKit_meta)
+
+--ボタン情報の更新(このスクリプトが複数レイヤから呼ばれることに対応)
+if (button_tf_log == nil) then
+	button_tf_log = {}
+end
+local button_tf = obj.check0
+local button = false
+if (button_tf_log[obj.layer] ~= nil) then
+	if (button_tf ~= button_tf_log[obj.layer]) then
+		button = true
+	end
+end
+button_tf_log[obj.layer] = button_tf
+
+if (button == true) then
+	Talk2Emote_for_Aviutl_PSDToolKit.CreateWindowInDLL()
+end
+
+
+--指定したレイヤのオブジェクトのx座標を取得してみることでオブジェクトの存在を確認
+local lx="layer"..obj.track0..".x"
+local ol = obj.getvalue(lx)
+local oltp = type(ol)
+
+--前回状態記憶のためのグローバル変数定義
+if (str_log == nil) then
+	str_log = {}
+end
+
+--オブジェクトが存在すればテキストを取得する。または無ければログから取得する。当該レイヤーにセリフ以外のがあったら、知らん。
+local input_str = nil
+if ((s ~= nil) and (oltp ~= "nil")) then
+	input_str = Talk2Emote_for_Aviutl_PSDToolKit.NormalizeText(s)
+elseif (str_log[obj.layer] ~= nil) then
+	input_str = str_log[obj.layer]
+end
+
+--セリフを保持
+str_log[obj.layer] = input_str
+
+--以下、入力テキストが存在する場合のみ処理を行う
+--if ((s ~= nil) and (oltp ~= "nil")) then
+if (input_str ~= nil) then
+	--テキストを取得する。
+	--local input_str = Talk2Emote_for_Aviutl_PSDToolKit.NormalizeText(s)
+
+	--ptklが前回と違うかどうかで判定を行う
+	local is_ptkl_add = false
+	if (ptkl_log == nil) then
+		ptkl_log = {}
+	end
+	if (ptkl_log[obj.layer] ~= nil) then
+		if (o.ptkl ~= ptkl_log[obj.layer]) then
+			--input_ptkl = o.ptkl
+			is_ptkl_add = true
+		end
+	end
+	ptkl_log[obj.layer] = o.ptkl
+
+	--is_word, is_ban_listの判定
+	local is_word_tf = false
+	local is_ban_list_tf = false
+	if (is_word == 1) then
+		is_word_tf = true
+	end
+	if (is_ban_list == 1) then
+		is_ban_list_tf = true
+	end
+
+	--SetParams → GetParam → UpdateWindow の順に行う。
+	if (input_str ~= nil) then
+		Talk2Emote_for_Aviutl_PSDToolKit.MutexLock();
+		if (is_ptkl_add == true) then
+			Talk2Emote_for_Aviutl_PSDToolKit.SetParams(obj.layer, input_str, o.ptkf, o.ptkl, is_word_tf, is_ban_list_tf, obj.track1, math.floor((#input_str)/2))
+		else
+			Talk2Emote_for_Aviutl_PSDToolKit.SetParams(obj.layer, input_str, o.ptkf, "", is_word_tf, is_ban_list_tf, obj.track1, math.floor((#input_str)/2))
+		end
+		--Talk2Emote_for_Aviutl_PSDToolKit.SetParams(obj.layer, input_str, o.ptkf, input_ptkl, is_word_tf, is_ban_list_tf, obj.track1, #input_str)
+		--Talk2Emote_for_Aviutl_PSDToolKit.SetParams(obj.layer, input_str, o.ptkf, o.ptkl, is_word_tf, is_ban_list_tf, obj.track1, #input_str)
+		local send_ptkl
+		local send_ptkl_flag
+		send_ptkl_flag, send_ptkl = Talk2Emote_for_Aviutl_PSDToolKit.GetParam(obj.layer, input_str, o.ptkf, "ptkl")
+		if ((send_ptkl_flag == true) and (send_ptkl ~= nil) and (send_ptkl ~= "")) then
+			o.ptkl = send_ptkl
+			--GetParamから得られたptklによるPSD,subobj=require("PSDToolKit").PSDState.init(obj,o)
+			PSD,subobj=require("PSDToolKit").PSDState.init(obj,o)
+		end
+		--UpdateWindow()はこのレイヤのオブジェクトが選択されている（クリックされてパラメータが操作できる状態である）場合のみウインドウを更新
+		if (rikky_module.getinfo("focus") == true) then
+			Talk2Emote_for_Aviutl_PSDToolKit.UpdateWindow()
+		end
+		Talk2Emote_for_Aviutl_PSDToolKit.MutexUnlock();
+	end
+end
