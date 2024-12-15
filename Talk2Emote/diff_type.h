@@ -1,0 +1,1 @@
+enum DiffType {NoData, Through, Swap, Delete, Insert};
