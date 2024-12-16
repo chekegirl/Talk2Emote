@@ -12,6 +12,45 @@ MITライセンスです。
 
 ## 実行形式ファイルに変換する方法
 
+### 必要なものの導入、フォルダ構成
+
+以下の構成にします。
+```
+Talk2Emote/
+├── lua5_1_4_Win32_dll8_lib/
+│   ├── include/
+│   │   ├── lauxlib.h
+│   │   ├── lua.h
+│   │   ├── lua.hpp
+│   │   ├── luaconf.h
+│   │   └── lualib.h
+│   ├── lua5.1.dll
+│   ├── lua5.1.lib
+│   ├── lua51.dll
+│   └── lua51.lib
+├── script/
+│   ├── @Talk2Emote効果.anm
+│   └── Talk2Emote.anm
+├── Talk2Emote/
+│   ├── dictionary/
+│   │   └── FaceDictionary.t2edict
+│   ├── face_predict/
+│   │   ├── gimon.cpp
+│   │   ├── ikari.cpp
+│   │   ├── negaposi.cpp
+│   │   ├── odoroki.cpp
+│   │   └── priority.txt
+│   ├── ban_list.cpp
+│   ├── dictionary_memory.cpp
+│   ├── diff_type.h
+│   ├── face_predict.cpp
+│   ├── <span style="color: red;">libmecab.dll</span>
+│   ├── libmecab.lib
+│   ├── mecab.h
+│   └── mecab_funcs.c
+└── Talk2Emote_for_Aviutl_PSDToolKit.cpp
+```
+
 | ファイル | ビルド方法 |
 | ---- | ---- |
 | mecab_funcs.c | gcc -DDLL_IMPORT -I. mecab_funcs.c -shared -o mecab_funcs.dll C:\Talk2Emote\libmecab.dll ※Cドライブ直下で行う必要があることに注意 |
