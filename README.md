@@ -10,16 +10,16 @@ MITライセンスです。
 
 もし自分でプログラムを改造して利用する場合は、頑張ってください。各dllについて、基本的にそのdllだけを変更して差し替えて実行できるように作ってあります。
 
-## 実行形式ファイルに変換する方法
+## ソースコードからの使用方法
 
 ### 必要なものの導入、フォルダ構成
 
-<span style="color: red;">
+まず前提として、MeCabをインストールしてある必要があります。
+
 以下の構成にします。
-</span>
 
 ```
-Talk2Emote/
+./Talk2Emote/
 ├── lua5_1_4_Win32_dll8_lib/
 │   ├── include/
 │   │   ├── lauxlib.h
@@ -34,25 +34,55 @@ Talk2Emote/
 ├── script/
 │   ├── @Talk2Emote効果.anm
 │   └── Talk2Emote.anm
-├── Talk2Emote/
-│   ├── dictionary/
-│   │   └── FaceDictionary.t2edict
-│   ├── face_predict/
-│   │   ├── gimon.cpp
-│   │   ├── ikari.cpp
-│   │   ├── negaposi.cpp
-│   │   ├── odoroki.cpp
-│   │   └── priority.txt
-│   ├── ban_list.cpp
-│   ├── dictionary_memory.cpp
-│   ├── diff_type.h
-│   ├── face_predict.cpp
+└── Talk2Emote_for_Aviutl_PSDToolKit.cpp
+
+C:/
+└── Talk2Emote/
+    ├── dictionary/
+    │   └── FaceDictionary.t2edict
+    ├── face_predict/
+    │   ├── gimon.cpp
+    │   ├── ikari.cpp
+    │   ├── negaposi.cpp
+    │   ├── odoroki.cpp
+    │   └── priority.txt
+    ├── ban_list.cpp
+    ├── dictionary_memory.cpp
+    ├── diff_type.h
+    ├── face_predict.cpp
+    ├── libmecab.dll
+    ├── libmecab.lib
+    ├── mecab.h
+    └── mecab_funcs.c
+```
+
+これについて、
+
+```
 │   ├── libmecab.dll
 │   ├── libmecab.lib
 │   ├── mecab.h
-│   └── mecab_funcs.c
-└── Talk2Emote_for_Aviutl_PSDToolKit.cpp
 ```
+
+ここはMeCabからコピーしてくる必要があります。また、
+
+```
+├── lua5_1_4_Win32_dll8_lib/
+│   ├── include/
+│   │   ├── lauxlib.h
+│   │   ├── lua.h
+│   │   ├── lua.hpp
+│   │   ├── luaconf.h
+│   │   └── lualib.h
+│   ├── lua5.1.dll
+│   ├── lua5.1.lib
+│   ├── lua51.dll
+│   └── lua51.lib
+```
+
+ここはLuaのSDKをダウンロードしてくる必要があります。
+
+## 実行形式への変換
 
 | ファイル | ビルド方法 |
 | ---- | ---- |
