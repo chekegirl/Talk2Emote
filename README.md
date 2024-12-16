@@ -14,7 +14,10 @@ MITライセンスです。
 
 ### 必要なものの導入、フォルダ構成
 
+<span style="color: red;">
 以下の構成にします。
+</span>
+
 ```
 Talk2Emote/
 ├── lua5_1_4_Win32_dll8_lib/
@@ -44,7 +47,7 @@ Talk2Emote/
 │   ├── dictionary_memory.cpp
 │   ├── diff_type.h
 │   ├── face_predict.cpp
-│   ├── <span style="color: red;">libmecab.dll</span>
+│   ├── libmecab.dll
 │   ├── libmecab.lib
 │   ├── mecab.h
 │   └── mecab_funcs.c
