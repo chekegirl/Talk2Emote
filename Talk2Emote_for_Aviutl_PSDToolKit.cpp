@@ -227,7 +227,7 @@ std::tuple<std::string, std::string> diff_get_str2face(const char* get_str, bool
 /**
  * テキストとptklの辞書に書き込む
  */
-int set_str2ptkl(const char* set_ptkf, const char* set_str, const char* set_ptkl){
+void set_str2ptkl(const char* set_ptkf, const char* set_str, const char* set_ptkl){
 	std::string dict_path = set_ptkf;
 	dict_path = dict_path + STR2PTKL_TYPE;
 	AddNewDictionary(dict_path);
@@ -1259,6 +1259,8 @@ static luaL_Reg functions[] = {
 
 extern "C" {
 	__declspec(dllexport) int luaopen_Talk2Emote_for_Aviutl_PSDToolKit(lua_State* L) {
+		LoadLibrary("C:\\Talk2Emote\\imports\\libgcc_s_dw2-1.dll");
+		LoadLibrary("C:\\Talk2Emote\\imports\\libstdc++-6.dll");
 		luaL_register(L, "Talk2Emote_for_Aviutl_PSDToolKit", functions);
 		if(dictionary_memory_instance == nullptr){	// 表情辞書引き機能の初期化
 			dictionary_memory_instance = LoadLibrary("C:/Talk2Emote/dictionary_memory.dll");
