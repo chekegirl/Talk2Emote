@@ -99,6 +99,19 @@ This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
 
+## 辞書ファイルについて
+
+PSDファイルに依存する辞書ファイルはPSDファイルと同じフォルダに、
+ - [PSDファイル名].str2ptkl.t2edict
+ - [PSDファイル名].face2ptkl.t2edict
+のファイル名で存在します。
+
+PSDファイルに依存しない辞書ファイルは
+ - C:\Talk2Emote\dictionary\FaceDictionary.t2edict
+ - C:\Talk2Emote\dictionary\Str2FaceDictionary.t2edict
+の２つです。
+
+
 ## 今後について
  - より自由度の高いレイヤ構成に対してTalk2Emoteを適用できるようにしたい
  - 表情推定（特にネガポジ判定）機能を強化したい
