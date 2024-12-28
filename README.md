@@ -106,11 +106,12 @@ PSDファイルに依存する辞書ファイルはPSDファイルと同じフ�
  - [PSDファイル名].face2ptkl.t2edict
 のファイル名で存在します。
 
+（ということは、PSDファイルの置き場所は、読み書き両方の権限が付与されている必要があります。）
+
 PSDファイルに依存しない辞書ファイルは
  - C:\Talk2Emote\dictionary\FaceDictionary.t2edict
  - C:\Talk2Emote\dictionary\Str2FaceDictionary.t2edict
 の２つです。
-
 
 ## 今後について
  - より自由度の高いレイヤ構成に対してTalk2Emoteを適用できるようにしたい
