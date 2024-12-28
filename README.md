@@ -98,3 +98,8 @@ Copyright (C) 2016 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
+
+## 今後について
+ - より自由度の高いレイヤ構成に対してTalk2Emoteを適用できるようにしたい
+ - 表情推定（特にネガポジ判定）機能を強化したい
+ - 導入を簡単にしたい
